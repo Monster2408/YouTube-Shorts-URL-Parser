@@ -1,20 +1,22 @@
-window.onload = function() {
-    setTimeout(function() {
-        // idがdescriptionのdiv要素を取得
-        var description = document.getElementById('description');
-        // descriptionの中のspan要素をlistに代入
-        var list = description.getElementsByTagName('span');
-        // listの中の要素を順番に取り出す
-        for (var i = 0, len = list.length; i < len; i++) {
-            // spanの中のテキストを取得
-            var text = list[i].firstChild.nodeValue;
-            // spanの中のテキストにurlが含まれていたらa要素を作成
-            // ただしurlの終わりは半角スペースか改行か全角スペースとする
-            // また，urlはhttp://もしくはhttps://から始まるものとする
-            // 他にもurlが複数含まれていた場合も考慮する
-            text = text.replace(/(https?:\/\/[\w\/:%#\$&\?\(\)~\.=\+\-]+)/g, '<a href="$1">$1</a>');
-            // spanの中身を置き換える
-            list[i].innerHTML = text;
+// Wait for the document to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // todo: このままだと説明が消えるだけ
+    function parseShortsURLs() {
+        // Select the summary column element
+        const summaryColumn = document.querySelector('div#description yt-formatted-string.content.style-scope.ytd-expandable-video-description-body-renderer');
+
+        // Check if the summary column element exists
+        if (summaryColumn) {
+            // Regular expression to match URLs in the summary column
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+            // Replace plain URLs with clickable links
+            summaryColumn.innerHTML = summaryColumn.innerHTML.replace(urlRegex, function(url) {
+                return '<a href="' + url + '" target="_blank">' + url + '</a>';
+            });
         }
-    }, 5000);
-}
+    }
+
+    // Call the function to parse and make URLs clickable
+    parseShortsURLs();
+});
