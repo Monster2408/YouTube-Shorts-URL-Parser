@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "YouTube Shorts URL Parser",
+    "short_name": "Shorts URL",
+    "version": "1.0.0.0",
+    "description": "This is an extension that makes the URL in the summary column of YouTUbe Shorts clickable!",
+    "content_scripts": [
+        {
+            "matches": [ "https://www.youtube.com/shorts/*" ],
+            "js": [ "script.js" ]
+        }
+    ]
+}
